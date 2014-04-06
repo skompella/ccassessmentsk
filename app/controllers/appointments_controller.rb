@@ -4,7 +4,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.all
+    @appointments = Appointment.where("start_time > ? OR end_time > ?",Time.now)
   end
 
   # GET /appointments/1
