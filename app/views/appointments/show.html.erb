@@ -20,5 +20,10 @@
   <%= @appointment.end_time %>
 </p>
 
+<p>
+  <strong>Comments:</strong>
+  <%= @appointment.comments %>
+</p>
+
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |
 <%= link_to 'Back', appointments_path %>

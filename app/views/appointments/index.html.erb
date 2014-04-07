@@ -7,6 +7,7 @@
       <th>Last name</th>
       <th>Start time</th>
       <th>End time</th>
+      <th>Comments</th>
       <th></th>
       <th></th>
       <th></th>
@@ -20,6 +21,7 @@
         <td><%= appointment.last_name %></td>
         <td><%= appointment.start_time %></td>
         <td><%= appointment.end_time %></td>
+        <td><%= appointment.comments %></td>
         <td><%= link_to 'Show', appointment %></td>
         <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
         <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
