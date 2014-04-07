@@ -11,8 +11,9 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1.json
   def show
      respond_to do |format|
-      if !@appointment.nil?        
-        format.json { render action: 'show', status: :success, location: @appointment }
+      if !@appointment.nil?
+        format.html { render action: 'show' }
+        format.json { render action: 'show', status: :success }
       else
         errorMsg ={  "error" => @error }
         format.json { render json: errorMsg, status: :unprocessable_entity }
@@ -42,11 +43,16 @@ class AppointmentsController < ApplicationController
   # POST /appointments
   # POST /appointments.json
   def create
-    @appointment = Appointment.new()
-    @appointment.first_name = params[:first_name] != null ? params[:first_name] : ""
-    @appointment.last_name = params[:last_name] != null ? params[:last_name] : ""
-    @appointment.start_time = params[:start_time] != null ? params[:start_time] : ""
-    @appointment.end_time = params[:end_time]  != null ? params[:end_time] : ""
+    #render :text => params.inspect.to_s
+    if params["appointment"].nil?
+      @appointment = Appointment.new()
+      @appointment.first_name = params[:first_name] 
+      @appointment.last_name = params[:last_name]
+      @appointment.start_time = params[:start_time] 
+      @appointment.end_time = params[:end_time] 
+    else
+      @appointment = Appointment.new(appointment_params)
+    end    
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
