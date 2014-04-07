@@ -50,6 +50,7 @@ class AppointmentsController < ApplicationController
       @appointment.last_name = params[:last_name]
       @appointment.start_time = params[:start_time] 
       @appointment.end_time = params[:end_time] 
+      @appointment.comments = params[:comments]
     else
       @appointment = Appointment.new(appointment_params)
     end    
