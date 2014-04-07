@@ -4,7 +4,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.where("start_time > ? OR end_time > ?",Time.now)
+    @appointments = Appointment.where("start_time > ? OR end_time > ?",Time.now, Time.now)
   end
 
   # GET /appointments/1
@@ -26,7 +26,8 @@ class AppointmentsController < ApplicationController
   
   #POST /appointments/upload
   def upload
-    Appointment.import(params[:file])
+     Appointment.import(params[:file])
+     redirect_to :root_url
   end
   
   # GET /appointments/new
@@ -42,10 +43,10 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new()
-    @appointment.first_name = params[:first_name]
-    @appointment.last_name = params[:last_name]
-    @appointment.start_time = params[:start_time]
-    @appointment.end_time = params[:end_time]
+    @appointment.first_name = params[:first_name] != null ? params[:first_name] : ""
+    @appointment.last_name = params[:last_name] != null ? params[:last_name] : ""
+    @appointment.start_time = params[:start_time] != null ? params[:start_time] : ""
+    @appointment.end_time = params[:end_time]  != null ? params[:end_time] : ""
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
@@ -76,9 +77,9 @@ class AppointmentsController < ApplicationController
   def destroy
     begin      
       @appointment.destroy
-      status_msg ={"message"=>"Deleted Successfully", "id" => params[:id]}
+      status_msg ={"message"=>"Appointment was deleted successfully", "id" => params[:id]}
     rescue
-      status_msg ={"message"=>"Unable to delete ", "id" => params[:id]}
+      status_msg ={"message"=>"Unable to delete appointment ", "id" => params[:id]}
     end
     respond_to do |format|
       format.html { redirect_to appointments_url }
