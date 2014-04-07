@@ -28,7 +28,7 @@ class AppointmentsController < ApplicationController
   #POST /appointments/upload
   def upload
      Appointment.import(params[:file])
-     redirect_to :root_url
+     redirect_to root_path
   end
   
   # GET /appointments/new
