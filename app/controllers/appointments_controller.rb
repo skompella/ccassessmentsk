@@ -4,7 +4,15 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.where("start_time > ? OR end_time > ?",Time.now, Time.now)
+    if params[:start_time].nil? && params[:end_time].nil?
+      @appointments = Appointment.where("start_time > ? OR end_time > ?",Time.now, Time.now)
+    elsif params[:end_time].nil?
+      @appointments = Appointment.where(:start_time => DateTime.parse(params[:start_time]))
+    elsif params[:start_time].nil?
+      @appointments = Appointment.where(:end_time => DateTime.parse(params[:end_time]))
+    else
+      @appointments = Appointment.where(:start_time => DateTime.parse(params[:start_time]),:end_time => DateTime.parse(params[:end_time]))
+    end
   end
 
   # GET /appointments/1
